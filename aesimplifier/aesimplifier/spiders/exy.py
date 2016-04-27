@@ -11,14 +11,9 @@ class Exy(scrapy.Spider):
         super(Exy, self).__init__(*args, **kwargs)
         self.start_urls = [
             'http://archipelagoexodus.proboards.com/board/21/online-role-play',
-            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=1",
-            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=2",
-            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=3",
-            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=4",
-            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=5",
         ]
         self.topics = [
-            '(Dis)Orientation',
+            'Luxury Space Ride',
         ]
 
     def parse(self, response):
@@ -32,7 +27,7 @@ class Exy(scrapy.Spider):
 
 
     def parse_page(self, response):
-        title = response.selector.xpath('//h1').extract()[0]
+        title = response.selector.xpath('//h1/text()').extract()[0]
         posts = response.selector.xpath('//tr[contains(@class, "post")]')
         for post in posts:
             p = Post()
