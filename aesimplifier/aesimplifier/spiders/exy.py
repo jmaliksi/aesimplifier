@@ -4,24 +4,32 @@ from aesimplifier.items import Post
 
 
 class Exy(scrapy.Spider):
-    name = "exy"
-    allowed_domains = ["archipelagoexodus.proboards.com"]
-    start_urls = [
-        "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=1",
-        # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=2",
-        # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=3",
-        # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=4",
-        # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=5",
-    ]
+    name = 'exy'
+    allowed_domains = ['archipelagoexodus.proboards.com']
+
+    def __init__(self, *args, **kwargs):
+        super(Exy, self).__init__(*args, **kwargs)
+        self.start_urls = [
+            'http://archipelagoexodus.proboards.com/board/21/online-role-play',
+            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=1",
+            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=2",
+            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=3",
+            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=4",
+            # "http://archipelagoexodus.proboards.com/thread/3503/dis-orientation?page=5",
+        ]
+        self.topics = [
+            '(Dis)Orientation',
+        ]
 
     def parse(self, response):
-        links = response.selector.xpath('//a[re:test(@href, "/thread/\\d*/.*\\?page=\\d+")]/@href').extract()
-        for link in links:
-            # remove this when we go to full crawling
-            if link[:link.index('?')] not in response.url:
+        topics = response.selector.xpath('//a[contains(@class, "thread-link")]')
+        for topic in topics:
+            if topic.xpath('text()').extract_first() not in self.topics:
                 continue
-            url = response.urljoin(link)
+            topic_url = topic.xpath('@href').extract_first()
+            url = response.urljoin(topic_url)
             yield scrapy.Request(url, callback=self.parse_page)
+
 
     def parse_page(self, response):
         title = response.selector.xpath('//h1').extract()[0]
@@ -33,3 +41,13 @@ class Exy(scrapy.Spider):
             p['post_id'] = post.xpath('@id').extract()[0]
             p['title'] = title
             yield p
+
+        links = response.selector.xpath('//a[re:test(@href, "/thread/\\d*/.*\\?page=\\d+")]/@href').extract()
+        for link in links:
+            # remove this when we go to full crawling ?
+            if link[:link.index('?')] not in response.url:
+                continue
+            url = response.urljoin(link)
+            yield scrapy.Request(url, callback=self.parse_page)
+
+

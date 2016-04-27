@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
-
 
 class AesimplifierPipeline(object):
     def __init__(self):
@@ -15,6 +10,7 @@ class AesimplifierPipeline(object):
         with open('bluh.html', 'wb') as f:
             f.write('<head><meta charset="UTF-8"></head><body>')
             f.write('<h1><center style="font-family: serif;">{}</center></h1>'.format(stuff[0]['title']))
+            f.write('{}'.format(len(stuff)))
             for item in stuff:
                 f.write(
                     '<h2><center style="font-family: serif;">{}</center></h2>'.format(
