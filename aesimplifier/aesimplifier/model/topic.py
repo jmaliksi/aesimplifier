@@ -14,5 +14,5 @@ class Topic(object):
         self.post_ids.add(post['post_id'])
 
     def get_sorted_posts(self):
-        return sorted(self.posts, key=lambda x: x['post_id'])
+        return sorted(self.posts, key=lambda x: int(x['post_id'][5:]))
 

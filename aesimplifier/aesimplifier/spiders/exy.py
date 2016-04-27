@@ -6,14 +6,49 @@ from aesimplifier.items import Post
 class Exy(scrapy.Spider):
     name = 'exy'
     allowed_domains = ['archipelagoexodus.proboards.com']
+    start_urls = [
+        'http://archipelagoexodus.proboards.com/board/21/online-role-play',
+        'http://archipelagoexodus.proboards.com/board/15/exodus-writing-archive',
+        'http://archipelagoexodus.proboards.com/board/22/online-role-play',
+        'http://archipelagoexodus.proboards.com/board/17/ishkabibble',
+        'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=2',
+        'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=3',
+        'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=4',
+        'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=5',
+        'http://archipelagoexodus.proboards.com/board/1/aleta',
+    ]
 
     def __init__(self, *args, **kwargs):
         super(Exy, self).__init__(*args, **kwargs)
-        self.start_urls = [
-            'http://archipelagoexodus.proboards.com/board/21/online-role-play',
-        ]
         self.topics = [
-            'Luxury Space Ride',
+            '(Dis)Orientation',
+            'Chords in an Ethereal Harp',
+            'Triannual',
+            'Obscured Truth; Court is in Session',
+            'Luxury Train Ride',
+            'Head Games',
+            'Whisper in My Ear',
+            "It's All Fun and Games (Aleta)",
+            'End Game',
+            'The Last Best Hope',
+            'Summoner Style',
+            'Gasoline',
+            'The Case of the Burgled Boullogne',
+            'Ishkabibble Scene Zero',
+            'Ishkabibble Scene One',
+            'Ishkabibble Scene Two',
+            'Ishkabibble Scene Three',
+            'Ishkabibble Scene Four',
+            'Ishkabibble Scene Five',
+            'Ishkabibble Scene Six',
+            'Ishkabibble Scene Seven',
+            'Ishkabibble Scene Eight',
+            'Ishkabibble Scene Nine',
+            'Ishkabibble Scene Twelve',
+            'Ishkabibble Scene Nineteen',
+            'Ishkabibble Scene Twenty-one',
+            'OOC: World Building',
+            'The Grand Reconstruction!',
         ]
 
     def parse(self, response):
@@ -31,7 +66,11 @@ class Exy(scrapy.Spider):
         posts = response.selector.xpath('//tr[contains(@class, "post")]')
         for post in posts:
             p = Post()
-            p['poster'] = post.xpath('td/table/tr/td/div/a[contains(@class, "user-link")]/text()').extract()[0]
+            # guests first
+            poster = post.xpath('td/table/tr/td/div/span/span[@class="user-guest"]/text()').extract_first()
+            if not poster:
+                poster = post.xpath('td/table/tr/td/div/a[contains(@class, "user-link")]/text()').extract_first()
+            p['poster'] = poster
             p['content'] = post.xpath('td/table/tr/td/article/div[@class="message"]').extract()[0]
             p['post_id'] = post.xpath('@id').extract()[0]
             p['title'] = title
