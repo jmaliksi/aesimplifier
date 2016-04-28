@@ -2,4 +2,4 @@ env/*
 *.swp
 *.swo
 *.pyc
-*.html
+dist/*

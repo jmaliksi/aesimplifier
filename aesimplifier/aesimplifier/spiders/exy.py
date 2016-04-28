@@ -50,7 +50,6 @@ class Exy(scrapy.Spider):
             'OOC: World Building',
             'The Grand Reconstruction!',
         ]
-        self.topics = ['The Case of the Burgled Boullogne']
 
     def parse(self, response):
         topics = response.selector.xpath('//a[contains(@class, "thread-link")]')

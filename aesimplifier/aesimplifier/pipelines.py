@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+import os
 import re
 from aesimplifier.model.topic import Topic
 from aesimplifier.view.topic import topic_template, index_template
+
+DIST = 'dist'
 
 
 class AesimplifierPipeline(object):
@@ -18,7 +21,7 @@ class AesimplifierPipeline(object):
                     posts=topic.get_sorted_posts()
                 ).encode('utf8'))
             topic_names.append((filename, topic.title))
-        with open('index.html', 'wb') as f:
+        with open(os.path.join(DIST, 'index.html'), 'wb') as f:
             f.write(index_template.render(
                 topics=topic_names
             ).encode('utf8'))
@@ -31,4 +34,4 @@ class AesimplifierPipeline(object):
         return item
 
     def _generate_file_name(self, title):
-        return re.sub(r'[:\(\)\s\[\]!;]', '', title) + '.html'
+        return os.path.join(DIST, re.sub(r'[:\(\)\s\[\]!;]', '', title) + '.html')
