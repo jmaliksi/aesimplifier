@@ -2,7 +2,7 @@
 import os
 import re
 from aesimplifier.model.topic import Topic
-from aesimplifier.view.topic import topic_template, index_template
+from aesimplifier.view.templates import topic_template, index_template
 
 DIST = 'dist'
 
@@ -12,6 +12,7 @@ class AesimplifierPipeline(object):
         self.topics = {}
 
     def close_spider(self, spider):
+        # probably should move this to a second post pass and just save the json raw
         topic_names = []
         for topic in self.topics.itervalues():
             filename = self._generate_file_name(topic.title)

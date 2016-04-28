@@ -1,0 +1,34 @@
+h1 {
+    font-family: "lora", serif;
+    text-align: center;
+}
+
+.poster {
+    font-family: "forum", serif;
+    text-align: center;
+}
+
+.content {
+    font-family: "open sans", helvetica, arial, sans-serif;
+    line-height: 1.5;
+    margin: 0 auto;
+    width: 80%;
+    text-align: justify;
+}
+
+.spoiler {
+    display: none;
+}
+
+.spoiler_header {
+    font-size: 9pt;
+    font-family: "open sans", helvetica, arial, sans-serif;
+}
+
+.avatar_size_quote > img {
+    max-width: 50px;
+}
+
+.quote_body {
+    font-size: 10pt;
+}
