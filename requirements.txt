@@ -1,1 +1,2 @@
-scrapy==1.0.5
+scrapy<=2.0.0
+jinja2<3.0.0
