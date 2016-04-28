@@ -2,4 +2,4 @@ env/*
 *.swp
 *.swo
 *.pyc
-dist/*
+aesimplifier/dist/
