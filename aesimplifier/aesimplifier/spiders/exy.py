@@ -8,8 +8,6 @@ class Exy(scrapy.Spider):
     allowed_domains = ['archipelagoexodus.proboards.com']
     start_urls = [
         'http://archipelagoexodus.proboards.com/board/21/online-role-play',
-    ]
-    '''
         'http://archipelagoexodus.proboards.com/board/15/exodus-writing-archive',
         'http://archipelagoexodus.proboards.com/board/22/online-role-play',
         'http://archipelagoexodus.proboards.com/board/17/ishkabibble',
@@ -18,7 +16,7 @@ class Exy(scrapy.Spider):
         'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=4',
         'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=5',
         'http://archipelagoexodus.proboards.com/board/1/aleta',
-    ]'''
+    ]
 
     def __init__(self, *args, **kwargs):
         super(Exy, self).__init__(*args, **kwargs)
@@ -52,7 +50,6 @@ class Exy(scrapy.Spider):
             'OOC: World Building',
             'The Grand Reconstruction!',
         ]
-        self.topics = ['Luxury Space Ride']
 
     def parse(self, response):
         topics = response.selector.xpath('//a[contains(@class, "thread-link")]')
