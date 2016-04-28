@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href='https://fonts.googleapis.com/css?family=Lora|Forum|Open+Sans' rel='stylesheet' type='text/css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+    <style>
+        /* probbaly should move this to a css thinger */
+        h1 {
+            font-family: "lora", serif;
+            text-align: center;
+        }
+        .poster {
+            font-family: "forum", serif;
+            text-align: center;
+        }
+        .content {
+            font-family: "open sans", helvetica, arial, sans-serif;
+            line-height: 1.5;
+            margin: 0 auto;
+            width: 80%;
+            text-align: justify;
+        }
+        .spoiler {
+            display: none;
+        }
+        .spoiler_header {
+            font-size: 9pt;
+            font-family: "open sans", helvetica, arial, sans-serif;
+        }
+        .avatar_size_quote > img {
+            max-width: 50px;
+        }
+    </style>
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    {% for post in posts %}
+        <h2 class="poster">{{ post.poster.decode('utf8') }}</h2>
+        <div class="content">{{ post.content.decode('utf8') }}</div>
+    {% endfor %}
+</body>
+</html>
