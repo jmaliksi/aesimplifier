@@ -6,6 +6,7 @@ h1 {
 .poster {
     font-family: "forum", serif;
     text-align: center;
+    line-height: 3;
 }
 
 .content {
@@ -31,4 +32,6 @@ h1 {
 
 .quote_body {
     font-size: 10pt;
+    padding: 10px 10px;
+    font-style: italic;
 }

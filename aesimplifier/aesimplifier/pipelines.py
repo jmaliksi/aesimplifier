@@ -16,7 +16,7 @@ class AesimplifierPipeline(object):
         topic_names = []
         for topic in self.topics.itervalues():
             filename = self._generate_file_name(topic.title)
-            with open(filename, 'wb') as f:
+            with open(os.path.join(DIST, filename), 'wb') as f:
                 f.write(topic_template.render(
                     title=topic.title,
                     posts=topic.get_sorted_posts()
@@ -35,4 +35,4 @@ class AesimplifierPipeline(object):
         return item
 
     def _generate_file_name(self, title):
-        return os.path.join(DIST, re.sub(r'[:\(\)\s\[\]!;]', '', title) + '.html')
+        return re.sub(r'[:\(\)\s\[\]!;]', '', title) + '.html'
