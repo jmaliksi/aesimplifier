@@ -11,10 +11,6 @@ class Exy(scrapy.Spider):
         'http://archipelagoexodus.proboards.com/board/15/exodus-writing-archive',
         'http://archipelagoexodus.proboards.com/board/22/online-role-play',
         'http://archipelagoexodus.proboards.com/board/17/ishkabibble',
-        'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=2',
-        'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=3',
-        'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=4',
-        'http://archipelagoexodus.proboards.com/board/21/online-role-play?page=5',
         'http://archipelagoexodus.proboards.com/board/1/aleta',
     ]
 
@@ -52,6 +48,16 @@ class Exy(scrapy.Spider):
         ]
 
     def parse(self, response):
+        yield scrapy.Request(response.url, callback=self.parse_topics)
+        boards = response.selector.xpath('//a[re:test(@href, "/board/\\d+/")]')
+        for board in boards:
+            if not board.xpath('text()'):
+                continue
+            board_url = board.xpath('@href').extract_first()
+            url = response.urljoin(board_url)
+            yield scrapy.Request(url, callback=self.parse_topics)
+
+    def parse_topics(self, response):
         topics = response.selector.xpath('//a[contains(@class, "thread-link")]')
         for topic in topics:
             if topic.xpath('text()').extract_first() not in self.topics:

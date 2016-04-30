@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "braggadocio";
+    src: url(911Fonts.com_BraggadocioRegular__-_911fonts.com-fonts-vPq1.ttf) format("truetype");
+}
+
 h1 {
     font-family: "lora", serif;
     text-align: center;

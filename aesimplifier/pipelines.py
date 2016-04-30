@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import re
+from scrapy.exceptions import DropItem
 from aesimplifier.model.topic import Topic
 from aesimplifier.view.templates import topic_template, index_template
 
@@ -9,30 +10,9 @@ DIST = 'dist'
 
 class AesimplifierPipeline(object):
     def __init__(self):
-        self.topics = {}
-
-    def close_spider(self, spider):
-        # probably should move this to a second post pass and just save the json raw
-        topic_names = []
-        for topic in self.topics.itervalues():
-            filename = self._generate_file_name(topic.title)
-            with open(os.path.join(DIST, filename), 'wb') as f:
-                f.write(topic_template.render(
-                    title=topic.title,
-                    posts=topic.get_sorted_posts()
-                ).encode('utf8'))
-            topic_names.append((filename, topic.title))
-        with open(os.path.join(DIST, 'index.html'), 'wb') as f:
-            f.write(index_template.render(
-                topics=topic_names
-            ).encode('utf8'))
+        self.post_ids = set()
 
     def process_item(self, item, spider):
-        title = item['title']
-        if title not in self.topics:
-            self.topics[title] = Topic(title)
-        self.topics[title].add_post(item)
+        if item['post_id'] in self.post_ids:
+            raise DropItem('Duplicate {}'.format(item['post_id']))
         return item
-
-    def _generate_file_name(self, title):
-        return re.sub(r'[:\(\)\s\[\]!;]', '', title) + '.html'
