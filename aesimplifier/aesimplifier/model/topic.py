@@ -12,8 +12,8 @@ class Topic(object):
         if post['post_id'] in self.post_ids:
             return
         self.posts.append(Post(
-            poster=post['poster'].encode('utf8'),
-            content=post['content'].encode('utf8'),
+            poster=post['poster'],
+            content=post['content'],
             post_id=post['post_id'],
         ))
         self.post_ids.add(post['post_id'])

@@ -5,16 +5,17 @@ h1 {
 
 .poster {
     font-family: "forum", serif;
-    text-align: center;
     line-height: 3;
+    text-align: center;
 }
 
 .content {
     font-family: "open sans", helvetica, arial, sans-serif;
+    font-size: 10pt;
     line-height: 1.5;
     margin: 0 auto;
-    width: 80%;
     text-align: justify;
+    width: 80%;
 }
 
 .spoiler {
@@ -22,8 +23,8 @@ h1 {
 }
 
 .spoiler_header {
-    font-size: 9pt;
     font-family: "open sans", helvetica, arial, sans-serif;
+    font-size: 9pt;
 }
 
 .avatar_size_quote > img {
@@ -32,6 +33,11 @@ h1 {
 
 .quote_body {
     font-size: 10pt;
-    padding: 10px 10px;
     font-style: italic;
+    padding: 10px 10px;
+}
+
+iframe {
+    display: block;
+    margin: 0 auto;
 }
