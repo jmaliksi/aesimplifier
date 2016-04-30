@@ -3,3 +3,4 @@ env/*
 *.swo
 *.pyc
 dist/
+tmp/

@@ -19,7 +19,7 @@ NEWSPIDER_MODULE = 'aesimplifier.spiders'
 #USER_AGENT = 'aesimplifier (+http://www.yourdomain.com)'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS=32
+CONCURRENT_REQUESTS=32
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
@@ -61,9 +61,9 @@ DOWNLOAD_DELAY=2
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-ITEM_PIPELINES = {
-    'aesimplifier.pipelines.AesimplifierPipeline': 300,
-}
+#ITEM_PIPELINES = {
+#    'aesimplifier.pipelines.AesimplifierPipeline': 300,
+#}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
