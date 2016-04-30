@@ -8,11 +8,8 @@ Installation
 
 Usage
 ----
-To run everything
-* fab generate
+To run everything `fab generate`
 
-To run just the crawler
-* fab crawl
+To run just the crawler `fab crawl`
 
-To just build html off crawler output
-* fab build
+To just build html off crawler output `fab build`
