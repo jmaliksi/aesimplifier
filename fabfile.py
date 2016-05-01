@@ -47,7 +47,7 @@ def upload():
         user=config.get('FTP', 'user'),
         passwd=config.get('FTP', 'password')
     )
-    session.cwd('josephmaliksi.com/stuff')
+    session.cwd(config.get('FTP', 'dir'))
     files = os.listdir('dist')
     for filename in files:
         f = open(os.path.join('dist', filename), 'rb')
