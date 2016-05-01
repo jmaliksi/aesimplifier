@@ -9,6 +9,8 @@ DIST = 'dist'
 
 
 def generate_html(content_file):
+    """Given the output json file, generate HTML pages for the topics crawled
+    as well as an index in the dist directory."""
     topic_names = []
     topics = {}
     with open(content_file, 'r') as infile:

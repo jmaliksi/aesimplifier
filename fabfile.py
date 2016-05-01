@@ -1,3 +1,7 @@
+import ftplib
+import os
+from ConfigParser import SafeConfigParser
+
 from fabric.api import local, task
 from aesimplifier.lib.generate_html import generate_html
 
@@ -32,3 +36,21 @@ def generate():
     clean()
     crawl()
     build()
+
+
+@task
+def upload():
+    config = SafeConfigParser()
+    config.read('ftp.cfg')
+    session = ftplib.FTP(
+        host=config.get('FTP', 'host'),
+        user=config.get('FTP', 'user'),
+        passwd=config.get('FTP', 'password')
+    )
+    session.cwd('josephmaliksi.com/stuff')
+    files = os.listdir('dist')
+    for filename in files:
+        f = open(os.path.join('dist', filename), 'rb')
+        session.storbinary('STOR {}'.format(filename), f)
+        f.close()
+    session.quit()

@@ -6,17 +6,12 @@ from aesimplifier.items import Post
 class Exy(scrapy.Spider):
     name = 'exy'
     allowed_domains = ['archipelagoexodus.proboards.com']
-    start_urls = [
+    default_start_urls = [
         'http://archipelagoexodus.proboards.com/board/21/online-role-play',
         'http://archipelagoexodus.proboards.com/board/15/exodus-writing-archive',
-        'http://archipelagoexodus.proboards.com/board/22/online-role-play',
-        'http://archipelagoexodus.proboards.com/board/17/ishkabibble',
-        'http://archipelagoexodus.proboards.com/board/1/aleta',
     ]
-
-    def __init__(self, *args, **kwargs):
-        super(Exy, self).__init__(*args, **kwargs)
-        self.topics = [
+ 
+    default_topics = [
             '(Dis)Orientation',
             'Chords in an Ethereal Harp',
             'Triannual',
@@ -47,6 +42,11 @@ class Exy(scrapy.Spider):
             'The Grand Reconstruction!',
         ]
 
+    def __init__(self, start_urls=None, topics=None, *args, **kwargs):
+        super(Exy, self).__init__(*args, **kwargs)
+        self.start_urls = start_urls or self.default_start_urls
+        self.topics = topics or self.default_topics
+
     def parse(self, response):
         yield scrapy.Request(response.url, callback=self.parse_topics)
         boards = response.selector.xpath('//a[re:test(@href, "/board/\\d+/")]')
@@ -58,6 +58,7 @@ class Exy(scrapy.Spider):
             yield scrapy.Request(url, callback=self.parse_topics)
 
     def parse_topics(self, response):
+        """Queues up threads in a board for scraping."""
         topics = response.selector.xpath('//a[contains(@class, "thread-link")]')
         for topic in topics:
             if topic.xpath('text()').extract_first() not in self.topics:
@@ -68,6 +69,7 @@ class Exy(scrapy.Spider):
 
 
     def parse_page(self, response):
+        """Pulls out individual posts from a particular thread."""
         title = response.selector.xpath('//h1/text()').extract()[0]
         posts = response.selector.xpath('//tr[contains(@class, "post")]')
         for post in posts:
@@ -89,5 +91,3 @@ class Exy(scrapy.Spider):
                 continue
             url = response.urljoin(link)
             yield scrapy.Request(url, callback=self.parse_page)
-
-

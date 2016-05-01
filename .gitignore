@@ -4,3 +4,4 @@ env/*
 *.pyc
 dist/
 tmp/
+ftp.cfg
