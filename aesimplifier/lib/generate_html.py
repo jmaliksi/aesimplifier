@@ -22,7 +22,7 @@ def generate_html(content_file):
 
     for topic in topics.itervalues():
         _write_topic(topic)
-        topic_names.append(topic.title)
+        topic_names.append((_generate_file_name(topic.title), topic.title))
 
     with open(os.path.join(DIST, 'index.html'), 'wb') as f:
         f.write(index_template.render(topics=topic_names).encode('utf8'))

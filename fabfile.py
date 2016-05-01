@@ -21,8 +21,11 @@ def clean():
 
 
 @task
-def crawl():
-    local('scrapy crawl exy -o tmp/items.json')
+def crawl(topicname=None):
+    if topicname:
+        local('scrapy crawl -a topic="{}" exy -o tmp/items.json'.format(topicname))
+    else:
+        local('scrapy crawl exy -o tmp/items.json')
 
 
 @task
@@ -39,7 +42,7 @@ def generate():
 
 
 @task
-def upload():
+def upload(filename=None):
     config = SafeConfigParser()
     config.read('ftp.cfg')
     session = ftplib.FTP(
@@ -48,7 +51,10 @@ def upload():
         passwd=config.get('FTP', 'password')
     )
     session.cwd(config.get('FTP', 'dir'))
-    files = os.listdir('dist')
+    if filename:
+        files = [filename]
+    else:
+        files = os.listdir('dist')
     for filename in files:
         f = open(os.path.join('dist', filename), 'rb')
         session.storbinary('STOR {}'.format(filename), f)

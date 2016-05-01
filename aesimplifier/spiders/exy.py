@@ -6,7 +6,7 @@ from aesimplifier.items import Post
 class Exy(scrapy.Spider):
     name = 'exy'
     allowed_domains = ['archipelagoexodus.proboards.com']
-    default_start_urls = [
+    start_urls = [
         'http://archipelagoexodus.proboards.com/board/21/online-role-play',
         'http://archipelagoexodus.proboards.com/board/15/exodus-writing-archive',
     ]
@@ -42,10 +42,9 @@ class Exy(scrapy.Spider):
         'The Grand Reconstruction!',
     ]
 
-    def __init__(self, start_urls=None, topics=None, *args, **kwargs):
+    def __init__(self, topic=None, *args, **kwargs):
         super(Exy, self).__init__(*args, **kwargs)
-        self.start_urls = start_urls or self.default_start_urls
-        self.topics = topics or self.default_topics
+        self.topics = [topic] if topic else self.default_topics
 
     def parse(self, response):
         yield scrapy.Request(response.url, callback=self.parse_topics)
