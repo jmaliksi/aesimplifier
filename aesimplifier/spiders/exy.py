@@ -40,6 +40,8 @@ class Exy(scrapy.Spider):
         'Ishkabibble Scene Twenty-one',
         'OOC: World Building',
         'The Grand Reconstruction!',
+        'Radiance Part I: An August Luncheon',
+        "All the King's Men",
     ]
 
     def __init__(self, topic=None, *args, **kwargs):
