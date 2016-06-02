@@ -42,6 +42,10 @@ class Exy(scrapy.Spider):
         'The Grand Reconstruction!',
         'Radiance Part I: An August Luncheon',
         "All the King's Men",
+        'What Lurks Beyond The Dark',
+        'Tragedy Begets Tragedy (ORP)',
+        'Muddy Season [Yoonfic!]',
+        'The Exploration',
     ]
 
     def __init__(self, topic=None, *args, **kwargs):
