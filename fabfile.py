@@ -60,3 +60,9 @@ def upload(filename=None):
         session.storbinary('STOR {}'.format(filename), f)
         f.close()
     session.quit()
+
+
+@task
+def build_and_upload():
+    generate()
+    upload()

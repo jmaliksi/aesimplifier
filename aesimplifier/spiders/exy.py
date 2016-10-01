@@ -46,6 +46,13 @@ class Exy(scrapy.Spider):
         'Tragedy Begets Tragedy (ORP)',
         'Muddy Season [Yoonfic!]',
         'The Exploration',
+        'Give a Critique / Get a Critique',
+        'Smooth Sailing',
+        'Anchor and Sextant',
+        'EMET',
+        'Radiance Part II: Jochebed',
+        'Getting to the Truth (ORP)',
+        'Tragedy Begets Tragedy (ORP)',
     ]
 
     def __init__(self, topic=None, *args, **kwargs):
