@@ -53,6 +53,7 @@ class Exy(scrapy.Spider):
         'Radiance Part II: Jochebed',
         'Getting to the Truth (ORP)',
         'Tragedy Begets Tragedy (ORP)',
+        'Getting to the Truth (ORP)',
     ]
 
     def __init__(self, topic=None, *args, **kwargs):
